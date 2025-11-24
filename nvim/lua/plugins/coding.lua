@@ -92,7 +92,7 @@ local lang_fts = {}
 for lang, value in pairs(langs) do
   local ft = value.ft
   if type(ft) == "table" then
-    vim.print(ft)
+    -- vim.print(ft)
     for _, v in pairs(ft) do
       table.insert(lang_fts, v)
     end

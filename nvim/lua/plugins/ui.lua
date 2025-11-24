@@ -1,3 +1,5 @@
+local config_dir = vim.fn.stdpath "config"
+
 return {
   -- theme
   {
@@ -6,19 +8,19 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme('catppuccin')
+      vim.cmd.colorscheme "catppuccin"
     end,
   },
 
   -- file explorer
   {
-    'nvim-tree/nvim-tree.lua',
+    "nvim-tree/nvim-tree.lua",
     dependencies = {
-      'nvim-tree/nvim-web-devicons',
-      'lewis6991/gitsigns.nvim',
+      "nvim-tree/nvim-web-devicons",
+      "lewis6991/gitsigns.nvim",
     },
     keys = {
-      { '<leader>t', '<cmd>NvimTreeToggle<cr>', desc = 'Open File Tree Toggle' },
+      { "<leader>t", "<cmd>NvimTreeToggle<cr>", desc = "Open File Tree Toggle" },
     },
     opts = {
       filters = {
@@ -102,7 +104,7 @@ return {
       local on_exit = function(status)
         if status == 0 then
           vim.api.nvim_exec_autocmds("User", {
-            pattern = "Git"
+            pattern = "Git",
           })
         end
         uv.close(handle_git)
@@ -114,29 +116,29 @@ return {
 
   -- gitsigns
   {
-    'lewis6991/gitsigns.nvim',
+    "lewis6991/gitsigns.nvim",
     event = "User Git",
     opts = {
       signs = {
-        add          = { text = '+' },
-        change       = { text = '~' },
-        delete       = { text = '-' },
-        topdelete    = { text = '*' },
-        changedelete = { text = '~-' },
-        untracked    = { text = '_' },
+        add = { text = "+" },
+        change = { text = "~" },
+        delete = { text = "-" },
+        topdelete = { text = "*" },
+        changedelete = { text = "~-" },
+        untracked = { text = "_" },
       },
     },
     config = function(_, opts)
-      require('gitsigns').setup(opts)
+      require("gitsigns").setup(opts)
     end,
   },
 
   -- bufferline
   {
-    'akinsho/bufferline.nvim',
-    event = 'User Bufferline',
+    "akinsho/bufferline.nvim",
+    event = "User Bufferline",
     version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    dependencies = "nvim-tree/nvim-web-devicons",
     init = function()
       vim.api.nvim_create_autocmd("User", {
         pattern = "VeryLazy",
@@ -145,7 +147,7 @@ return {
             vim.api.nvim_exec_autocmds("User", { pattern = "Bufferline" })
           end
 
-          if vim.bo.filetype == '' then
+          if vim.bo.filetype == "" then
             vim.api.nvim_create_autocmd("BufRead", {
               once = true,
               callback = _trigger,
@@ -174,12 +176,12 @@ return {
 
   -- term
   {
-    dir = "term",
+    dir = vim.fn.expand(config_dir .. "/lua/term"),
     keys = {
-      { '<A-h>', '<cmd>TermToggle sp htoggleTerm 0.3<cr>', desc = 'Toggle Horizontal Terminal', mode = { "n", "t" } }
+      { "<A-h>", "<cmd>TermToggle sp htoggleTerm 0.3<cr>", desc = "Toggle Horizontal Terminal", mode = { "n", "t" } },
     },
     config = function()
-      require('term').setup()
+      require("term").setup()
     end,
-  }
+  },
 }
